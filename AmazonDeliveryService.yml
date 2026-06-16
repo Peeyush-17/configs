@@ -17,16 +17,24 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
 
 
-  kafka:
+ kafka:
     bootstrap-servers: localhost:9092
 
     consumer:
+
       group-id: delivery-group
+
       auto-offset-reset: earliest
+
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
       properties:
+
         spring.json.trusted.packages: "*"
+
+        spring.json.value.default.type: com.amazon.delivery.kafka.PaymentEvent
 
 
 server:
