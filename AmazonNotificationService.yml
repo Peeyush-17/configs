@@ -4,8 +4,10 @@ spring:
 
   kafka:
     bootstrap-servers: localhost:9092
-    listener: observation-enabled: true
-    template: observation-enabled: true
+    listener:
+      observation-enabled: true
+    template:
+      observation-enabled: true
     consumer:
       group-id: notification-group
       auto-offset-reset: earliest
@@ -33,11 +35,10 @@ management:
     enabled: true
     sampling:
       probability: 1.0
-
   zipkin:
     tracing:
       endpoint: http://localhost:9411/api/v2/spans
 
 logging:
   pattern:
-    level: "%5p [${spring.application.name:},traceId=%X{traceId:-},spanId=%X{spanId:-}]"    
+    level: "%5p [${spring.application.name:},traceId=%X{traceId:-},spanId=%X{spanId:-}]"   
