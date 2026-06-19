@@ -1,13 +1,11 @@
 spring:
   application:
     name: AmazonCartService
-
   datasource:
     url: jdbc:mysql://localhost:3306/kodewala
     username: root
     password: peeyush@1234
     driver-class-name: com.mysql.cj.jdbc.Driver
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -31,7 +29,6 @@ management:
     enabled: true
     sampling:
       probability: 1.0
-
   zipkin:
     tracing:
       endpoint: http://localhost:9411/api/v2/spans
@@ -39,3 +36,15 @@ management:
 logging:
   pattern:
     level: "%5p [${spring.application.name:},traceId=%X{traceId:-},spanId=%X{spanId:-}]"
+  level:
+    io.github.resilience4j.circuitbreaker: DEBUG
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      paymentService:
+        slidingWindowSize: 5
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 30s
+        permittedNumberOfCallsInHalfOpenState: 2
